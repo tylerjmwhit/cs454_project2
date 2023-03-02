@@ -8,12 +8,14 @@ def BFS(N:int, D:set):
     parent = [-1]*N
     label = [-1]*7
     visited = [False]*N
+    # loop for setting up arrays and queues with starting state of zero
     for j in D:
         next = delta(0,j,N)
         visited[next] = True
         q.put(next)
         parent[next] = 0
         label[next] = j
+    # performing the BFS
     while not q.empty():
         if next == 0:
             break
