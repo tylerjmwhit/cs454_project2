@@ -1,22 +1,38 @@
 from queue import Queue
 
-def BFS(N:int, D:set):
-    #Making sure D is in ascending order
+
+def BFS(N: int, D: set):
+    """
+    Performs a Breadth-First Search (BFS) algorithm to find the shortest
+    path from the initial state (0) to the final state (0) of a deterministic
+    finite automaton (DFA) with a given set of input symbols and a modulus.
+
+    Args:
+        N: An integer representing the modulus of the DFA.
+        D: A set of integers representing the input symbols of the DFA.
+
+    Returns:
+        None.
+    """
+    # Sort the input symbols in ascending order
     D = sorted(D)
-    #initalizing our arrays and queues
-    q = Queue(maxsize = 0)
-    parent = [-1]*N
-    label = [-1]*N
-    visited = [False]*N
+
+    # Initialize our arrays and queues for BFS
+    q = Queue(maxsize=0)
+    parent = [-1] * N
+    label = [-1] * N
+    visited = [False] * N
+
     # loop for setting up arrays and queues with starting state of zero
     for j in D:
-        next = delta(0,j,N)
+        next = delta(0, j, N)
         visited[next] = True
         if j != 0:
             q.put(next)
         parent[next] = 0
         label[next] = j
-    # performing the BFS
+
+    # preforms the BFS
     while not q.empty():
         if next == 0:
             break
@@ -32,8 +48,10 @@ def BFS(N:int, D:set):
                 parent[next] = cur
                 label[next] = i
                 q.put(next)
+
+    # Output the shortest path if it exists, else print "No Solution"
     if next != 0:
-       return print("no soultion")
+        print("No Soultion")
     else:
         # trace the string using parent pointers and
         #  concatenate the corresponding labels as you trace until
@@ -44,16 +62,22 @@ def BFS(N:int, D:set):
             output += str(label[i])
             i = parent[i]
         output += str(label[i])
-        return print(output[: : -1])
-        
+        print(output[:: -1])
 
 
+def delta(cur: int, input: int, N: int):
+    """
+    Computes the delta value given the current state, input value, and modulus.
 
+    Args:
+        cur: An integer representing the current state.
+        input: An integer representing the input value.
+        N: An integer representing the modulus.
 
-
-
-def delta(cur: int, Input: int, N:int):
-    return (10*cur + Input) % N
+    Returns:
+        An integer representing the delta value.
+    """
+    return (10 * cur + input) % N
 
 
 def main():
@@ -62,22 +86,19 @@ def main():
         val = int(input("Enter a positive integer N between 1 and 99999, to compute for, Enter -1 to exit: "))
         if val == -1:
             break
-        if val > 0 and val < 10000:
-            #Create a list of strings split by white space to be converted to integers
-            stringDigits = input("Enter a list of allowed digits seperated by a space. Digits must be an integer from 0 to 9: ").split()
+        if 0 < val < 100000:
+            # Create a list of strings split by white space to be converted to integers
+            stringDigits = input(
+                "Enter a list of allowed digits seperated by a space. Digits must be an integer from 0 to 9: ").split()
             intDigits = [eval(i) for i in stringDigits]
-            if all(i <= 9 and i >= 0  for i in intDigits):
-                BFS(val , intDigits)
+            if all(9 >= i >= 0 for i in intDigits):
+                BFS(val, intDigits)
             else:
                 print("List of digits must contain integers between 0 and 9")
         else:
             print("Please enter a number between 1 and 99999 ")
+
+
 if __name__ == '__main__':
     main()
 
-
-11000001001000011
-11000001001000011
-
-11011011011001001
-11011011011001001
