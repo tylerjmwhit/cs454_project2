@@ -59,19 +59,19 @@ def delta(cur: int, Input: int, N:int):
 def main():
     val = 0
     while val != -1:
-        val = int(input("Enter a positive integer N, to compute for, Enter -1 to exit: "))
+        val = int(input("Enter a positive integer N between 1 and 99999, to compute for, Enter -1 to exit: "))
         if val == -1:
             break
-        #Create a list of strings split by white space to be converted to integers
-        stringDigits = input("Enter a list of allowed digits seperated by a space. Digits must be an integer from 0 to 9: ").split()
-        intDigits = [eval(i) for i in stringDigits]
-        if all(i >= 9 and i <= 0  for i in intDigits):
-            print("List of digits must contain integers between 0 and 9")
-        elif val > 0:
-            BFS(val , intDigits)
+        if val > 0 and val < 10000:
+            #Create a list of strings split by white space to be converted to integers
+            stringDigits = input("Enter a list of allowed digits seperated by a space. Digits must be an integer from 0 to 9: ").split()
+            intDigits = [eval(i) for i in stringDigits]
+            if all(i <= 9 and i >= 0  for i in intDigits):
+                BFS(val , intDigits)
+            else:
+                print("List of digits must contain integers between 0 and 9")
         else:
-            print("Please enter a number between Greater than 0 ")
-
+            print("Please enter a number between 1 and 99999 ")
 if __name__ == '__main__':
     main()
 
